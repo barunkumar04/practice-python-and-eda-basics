@@ -1,0 +1,312 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "1bbcdb01-0e98-4e91-b799-ead753cd8e76",
+   "metadata": {},
+   "source": [
+    "# Open API access form notebook"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2a3e8ec1-5c4f-4da2-ba05-115f090839e8",
+   "metadata": {},
+   "source": [
+    "### Steps to setup and use .env, in order to access Open API key\n",
+    "- Use a simple text editor like Notepad on Windows or TextEdit on Mac.\n",
+    "- Open your text editor and create a new file.\n",
+    "- Write your environment variables in the format KEY=VALUE. For example: OPENAI_API_KEY=your_api_key_here\n",
+    "- Save the File: Save the file with the name .env in your project directory. Make sure it doesn't have a .txt extension.\n",
+    "- pip install python-dotenv\n",
+    "- import and use as show in exmaple below."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "eed78400-08bb-48b6-881d-bc7030b318da",
+   "metadata": {
+    "collapsed": true,
+    "jupyter": {
+     "outputs_hidden": true
+    },
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: openai in /Applications/anaconda3/lib/python3.11/site-packages (1.75.0)\n",
+      "Requirement already satisfied: anyio<5,>=3.5.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (4.2.0)\n",
+      "Requirement already satisfied: distro<2,>=1.7.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (1.8.0)\n",
+      "Requirement already satisfied: httpx<1,>=0.23.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (0.28.1)\n",
+      "Requirement already satisfied: jiter<1,>=0.4.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (0.9.0)\n",
+      "Requirement already satisfied: pydantic<3,>=1.9.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (1.10.12)\n",
+      "Requirement already satisfied: sniffio in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (1.3.0)\n",
+      "Requirement already satisfied: tqdm>4 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (4.65.0)\n",
+      "Requirement already satisfied: typing-extensions<5,>=4.11 in /Applications/anaconda3/lib/python3.11/site-packages (from openai) (4.13.2)\n",
+      "Requirement already satisfied: idna>=2.8 in /Applications/anaconda3/lib/python3.11/site-packages (from anyio<5,>=3.5.0->openai) (3.4)\n",
+      "Requirement already satisfied: certifi in /Applications/anaconda3/lib/python3.11/site-packages (from httpx<1,>=0.23.0->openai) (2024.2.2)\n",
+      "Requirement already satisfied: httpcore==1.* in /Applications/anaconda3/lib/python3.11/site-packages (from httpx<1,>=0.23.0->openai) (1.0.8)\n",
+      "Requirement already satisfied: h11<0.15,>=0.13 in /Applications/anaconda3/lib/python3.11/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai) (0.14.0)\n",
+      "Requirement already satisfied: python-dotenv in /Applications/anaconda3/lib/python3.11/site-packages (0.21.0)\n",
+      "Collecting aisetup\n",
+      "  Downloading aisetup-0.1.9-py3-none-any.whl.metadata (1.2 kB)\n",
+      "Collecting folium<0.18,>=0.17 (from aisetup)\n",
+      "  Downloading folium-0.17.0-py2.py3-none-any.whl.metadata (3.8 kB)\n",
+      "Requirement already satisfied: ipython<9.0,>=8.18 in /Applications/anaconda3/lib/python3.11/site-packages (from aisetup) (8.20.0)\n",
+      "Collecting ipywidgets<9.0.0,>=8.1.3 (from aisetup)\n",
+      "  Downloading ipywidgets-8.1.6-py3-none-any.whl.metadata (2.4 kB)\n",
+      "Collecting matplotlib<4.0.0,>=3.9.2 (from aisetup)\n",
+      "  Downloading matplotlib-3.10.1-cp311-cp311-macosx_10_12_x86_64.whl.metadata (11 kB)\n",
+      "Requirement already satisfied: openai<2.0,>=1.42 in /Applications/anaconda3/lib/python3.11/site-packages (from aisetup) (1.75.0)\n",
+      "Collecting pandas<3.0,>=2.2 (from aisetup)\n",
+      "  Downloading pandas-2.2.3-cp311-cp311-macosx_10_9_x86_64.whl.metadata (89 kB)\n",
+      "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m89.9/89.9 kB\u001b[0m \u001b[31m2.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+      "\u001b[?25hCollecting python-dotenv<2.0.0,>=1.0.1 (from aisetup)\n",
+      "  Downloading python_dotenv-1.1.0-py3-none-any.whl.metadata (24 kB)\n",
+      "Collecting requests<3.0.0,>=2.32.3 (from aisetup)\n",
+      "  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)\n",
+      "Collecting branca>=0.6.0 (from folium<0.18,>=0.17->aisetup)\n",
+      "  Downloading branca-0.8.1-py3-none-any.whl.metadata (1.5 kB)\n",
+      "Requirement already satisfied: jinja2>=2.9 in /Applications/anaconda3/lib/python3.11/site-packages (from folium<0.18,>=0.17->aisetup) (3.1.3)\n",
+      "Requirement already satisfied: numpy in /Applications/anaconda3/lib/python3.11/site-packages (from folium<0.18,>=0.17->aisetup) (1.26.4)\n",
+      "Requirement already satisfied: xyzservices in /Applications/anaconda3/lib/python3.11/site-packages (from folium<0.18,>=0.17->aisetup) (2022.9.0)\n",
+      "Requirement already satisfied: decorator in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (5.1.1)\n",
+      "Requirement already satisfied: jedi>=0.16 in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (0.18.1)\n",
+      "Requirement already satisfied: matplotlib-inline in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (0.1.6)\n",
+      "Requirement already satisfied: prompt-toolkit<3.1.0,>=3.0.41 in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (3.0.43)\n",
+      "Requirement already satisfied: pygments>=2.4.0 in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (2.15.1)\n",
+      "Requirement already satisfied: stack-data in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (0.2.0)\n",
+      "Requirement already satisfied: traitlets>=5 in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (5.7.1)\n",
+      "Requirement already satisfied: pexpect>4.3 in /Applications/anaconda3/lib/python3.11/site-packages (from ipython<9.0,>=8.18->aisetup) (4.8.0)\n",
+      "Collecting comm>=0.1.3 (from ipywidgets<9.0.0,>=8.1.3->aisetup)\n",
+      "  Downloading comm-0.2.2-py3-none-any.whl.metadata (3.7 kB)\n",
+      "Collecting widgetsnbextension~=4.0.14 (from ipywidgets<9.0.0,>=8.1.3->aisetup)\n",
+      "  Downloading widgetsnbextension-4.0.14-py3-none-any.whl.metadata (1.6 kB)\n",
+      "Collecting jupyterlab_widgets~=3.0.14 (from ipywidgets<9.0.0,>=8.1.3->aisetup)\n",
+      "  Downloading jupyterlab_widgets-3.0.14-py3-none-any.whl.metadata (4.1 kB)\n",
+      "Requirement already satisfied: contourpy>=1.0.1 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (1.2.0)\n",
+      "Requirement already satisfied: cycler>=0.10 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (0.11.0)\n",
+      "Requirement already satisfied: fonttools>=4.22.0 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (4.25.0)\n",
+      "Requirement already satisfied: kiwisolver>=1.3.1 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (1.4.4)\n",
+      "Requirement already satisfied: packaging>=20.0 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (23.1)\n",
+      "Requirement already satisfied: pillow>=8 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (10.2.0)\n",
+      "Requirement already satisfied: pyparsing>=2.3.1 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (3.0.9)\n",
+      "Requirement already satisfied: python-dateutil>=2.7 in /Applications/anaconda3/lib/python3.11/site-packages (from matplotlib<4.0.0,>=3.9.2->aisetup) (2.8.2)\n",
+      "Requirement already satisfied: anyio<5,>=3.5.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (4.2.0)\n",
+      "Requirement already satisfied: distro<2,>=1.7.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (1.8.0)\n",
+      "Requirement already satisfied: httpx<1,>=0.23.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (0.28.1)\n",
+      "Requirement already satisfied: jiter<1,>=0.4.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (0.9.0)\n",
+      "Requirement already satisfied: pydantic<3,>=1.9.0 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (1.10.12)\n",
+      "Requirement already satisfied: sniffio in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (1.3.0)\n",
+      "Requirement already satisfied: tqdm>4 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (4.65.0)\n",
+      "Requirement already satisfied: typing-extensions<5,>=4.11 in /Applications/anaconda3/lib/python3.11/site-packages (from openai<2.0,>=1.42->aisetup) (4.13.2)\n",
+      "Requirement already satisfied: pytz>=2020.1 in /Applications/anaconda3/lib/python3.11/site-packages (from pandas<3.0,>=2.2->aisetup) (2023.3.post1)\n",
+      "Requirement already satisfied: tzdata>=2022.7 in /Applications/anaconda3/lib/python3.11/site-packages (from pandas<3.0,>=2.2->aisetup) (2023.3)\n",
+      "Requirement already satisfied: charset-normalizer<4,>=2 in /Applications/anaconda3/lib/python3.11/site-packages (from requests<3.0.0,>=2.32.3->aisetup) (2.0.4)\n",
+      "Requirement already satisfied: idna<4,>=2.5 in /Applications/anaconda3/lib/python3.11/site-packages (from requests<3.0.0,>=2.32.3->aisetup) (3.4)\n",
+      "Requirement already satisfied: urllib3<3,>=1.21.1 in /Applications/anaconda3/lib/python3.11/site-packages (from requests<3.0.0,>=2.32.3->aisetup) (2.0.7)\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in /Applications/anaconda3/lib/python3.11/site-packages (from requests<3.0.0,>=2.32.3->aisetup) (2024.2.2)\n",
+      "Requirement already satisfied: httpcore==1.* in /Applications/anaconda3/lib/python3.11/site-packages (from httpx<1,>=0.23.0->openai<2.0,>=1.42->aisetup) (1.0.8)\n",
+      "Requirement already satisfied: h11<0.15,>=0.13 in /Applications/anaconda3/lib/python3.11/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai<2.0,>=1.42->aisetup) (0.14.0)\n",
+      "Requirement already satisfied: parso<0.9.0,>=0.8.0 in /Applications/anaconda3/lib/python3.11/site-packages (from jedi>=0.16->ipython<9.0,>=8.18->aisetup) (0.8.3)\n",
+      "Requirement already satisfied: MarkupSafe>=2.0 in /Applications/anaconda3/lib/python3.11/site-packages (from jinja2>=2.9->folium<0.18,>=0.17->aisetup) (2.1.3)\n",
+      "Requirement already satisfied: ptyprocess>=0.5 in /Applications/anaconda3/lib/python3.11/site-packages (from pexpect>4.3->ipython<9.0,>=8.18->aisetup) (0.7.0)\n",
+      "Requirement already satisfied: wcwidth in /Applications/anaconda3/lib/python3.11/site-packages (from prompt-toolkit<3.1.0,>=3.0.41->ipython<9.0,>=8.18->aisetup) (0.2.5)\n",
+      "Requirement already satisfied: six>=1.5 in /Applications/anaconda3/lib/python3.11/site-packages (from python-dateutil>=2.7->matplotlib<4.0.0,>=3.9.2->aisetup) (1.16.0)\n",
+      "Requirement already satisfied: executing in /Applications/anaconda3/lib/python3.11/site-packages (from stack-data->ipython<9.0,>=8.18->aisetup) (0.8.3)\n",
+      "Requirement already satisfied: asttokens in /Applications/anaconda3/lib/python3.11/site-packages (from stack-data->ipython<9.0,>=8.18->aisetup) (2.0.5)\n",
+      "Requirement already satisfied: pure-eval in /Applications/anaconda3/lib/python3.11/site-packages (from stack-data->ipython<9.0,>=8.18->aisetup) (0.2.2)\n",
+      "Downloading aisetup-0.1.9-py3-none-any.whl (6.8 kB)\n",
+      "Downloading folium-0.17.0-py2.py3-none-any.whl (108 kB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m108.4/108.4 kB\u001b[0m \u001b[31m7.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+      "\u001b[?25hDownloading ipywidgets-8.1.6-py3-none-any.whl (139 kB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m139.8/139.8 kB\u001b[0m \u001b[31m17.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+      "\u001b[?25hDownloading matplotlib-3.10.1-cp311-cp311-macosx_10_12_x86_64.whl (8.2 MB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m8.2/8.2 MB\u001b[0m \u001b[31m11.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m00:01\u001b[0m00:01\u001b[0m\n",
+      "\u001b[?25hDownloading pandas-2.2.3-cp311-cp311-macosx_10_9_x86_64.whl (12.6 MB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m12.6/12.6 MB\u001b[0m \u001b[31m10.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m00:01\u001b[0m00:01\u001b[0m\n",
+      "\u001b[?25hDownloading python_dotenv-1.1.0-py3-none-any.whl (20 kB)\n",
+      "Downloading requests-2.32.3-py3-none-any.whl (64 kB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m64.9/64.9 kB\u001b[0m \u001b[31m4.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+      "\u001b[?25hDownloading branca-0.8.1-py3-none-any.whl (26 kB)\n",
+      "Downloading comm-0.2.2-py3-none-any.whl (7.2 kB)\n",
+      "Downloading jupyterlab_widgets-3.0.14-py3-none-any.whl (213 kB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m214.0/214.0 kB\u001b[0m \u001b[31m18.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+      "\u001b[?25hDownloading widgetsnbextension-4.0.14-py3-none-any.whl (2.2 MB)\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m2.2/2.2 MB\u001b[0m \u001b[31m12.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0ma \u001b[36m0:00:01\u001b[0m\n",
+      "\u001b[?25hInstalling collected packages: widgetsnbextension, requests, python-dotenv, jupyterlab_widgets, comm, pandas, matplotlib, branca, folium, ipywidgets, aisetup\n",
+      "  Attempting uninstall: widgetsnbextension\n",
+      "    Found existing installation: widgetsnbextension 3.5.2\n",
+      "    Uninstalling widgetsnbextension-3.5.2:\n",
+      "      Successfully uninstalled widgetsnbextension-3.5.2\n",
+      "  Attempting uninstall: requests\n",
+      "    Found existing installation: requests 2.31.0\n",
+      "    Uninstalling requests-2.31.0:\n",
+      "      Successfully uninstalled requests-2.31.0\n",
+      "  Attempting uninstall: python-dotenv\n",
+      "    Found existing installation: python-dotenv 0.21.0\n",
+      "    Uninstalling python-dotenv-0.21.0:\n",
+      "      Successfully uninstalled python-dotenv-0.21.0\n",
+      "  Attempting uninstall: jupyterlab_widgets\n",
+      "    Found existing installation: jupyterlab-widgets 3.0.9\n",
+      "    Uninstalling jupyterlab-widgets-3.0.9:\n",
+      "      Successfully uninstalled jupyterlab-widgets-3.0.9\n",
+      "  Attempting uninstall: comm\n",
+      "    Found existing installation: comm 0.1.2\n",
+      "    Uninstalling comm-0.1.2:\n",
+      "      Successfully uninstalled comm-0.1.2\n",
+      "  Attempting uninstall: pandas\n",
+      "    Found existing installation: pandas 2.1.4\n",
+      "    Uninstalling pandas-2.1.4:\n",
+      "      Successfully uninstalled pandas-2.1.4\n",
+      "  Attempting uninstall: matplotlib\n",
+      "    Found existing installation: matplotlib 3.8.0\n",
+      "    Uninstalling matplotlib-3.8.0:\n",
+      "      Successfully uninstalled matplotlib-3.8.0\n",
+      "  Attempting uninstall: ipywidgets\n",
+      "    Found existing installation: ipywidgets 7.6.5\n",
+      "    Uninstalling ipywidgets-7.6.5:\n",
+      "      Successfully uninstalled ipywidgets-7.6.5\n",
+      "\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+      "conda-repo-cli 1.0.75 requires requests_mock, which is not installed.\n",
+      "conda-repo-cli 1.0.75 requires clyent==1.2.1, but you have clyent 1.2.2 which is incompatible.\n",
+      "conda-repo-cli 1.0.75 requires requests==2.31.0, but you have requests 2.32.3 which is incompatible.\u001b[0m\u001b[31m\n",
+      "\u001b[0mSuccessfully installed aisetup-0.1.9 branca-0.8.1 comm-0.2.2 folium-0.17.0 ipywidgets-8.1.6 jupyterlab_widgets-3.0.14 matplotlib-3.10.1 pandas-2.2.3 python-dotenv-1.1.0 requests-2.32.3 widgetsnbextension-4.0.14\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install openai\n",
+    "!pip install python-dotenv\n",
+    "!pip install aisetup"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "c1be1f4f-c23a-4f0d-8df2-6526044749d4",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Matplotlib is building the font cache; this may take a moment.\n"
+     ]
+    }
+   ],
+   "source": [
+    "import os\n",
+    "from dotenv import load_dotenv\n",
+    "from openai import OpenAI\n",
+    "from aisetup import authenticate, print_llm_response, get_llm_response"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "f302bf28-cb0a-4a4c-a0aa-45085131df7d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<openai.OpenAI at 0x1123a18d0>"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Get the OpenAI API key from the .env file\n",
+    "load_dotenv('.env', override=True)\n",
+    "openai_api_key = os.getenv('OPENAI_API_KEY')\n",
+    "authenticate(openai_api_key)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "5e7903d8-7b9e-4060-94e6-87f7db838ff8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def get_llm_response(prompt):\n",
+    "    completion = client.chat.completions.create(\n",
+    "        model=\"gpt-4o-mini\",\n",
+    "        messages=[\n",
+    "            {\n",
+    "                \"role\": \"system\",\n",
+    "                \"content\": \"You are an AI assistant.\",  # Try \"You are a sarcastic AI assistant.\"\n",
+    "            },\n",
+    "            {\"role\": \"user\", \"content\": prompt},\n",
+    "        ],\n",
+    "        temperature=0.0,  # Between 0 - 1, increase to see randomness in response.\n",
+    "    )\n",
+    "    response = completion.choices[0].message.content\n",
+    "    return response"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "f97795f8-845f-4440-b9b6-aa0e79dff885",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "RateLimitError",
+     "evalue": "Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mRateLimitError\u001b[0m                            Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[32], line 2\u001b[0m\n\u001b[1;32m      1\u001b[0m prompt \u001b[38;5;241m=\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mWhat is the capital of France?\u001b[39m\u001b[38;5;124m\"\u001b[39m\n\u001b[0;32m----> 2\u001b[0m response \u001b[38;5;241m=\u001b[39m get_llm_response(prompt)\n\u001b[1;32m      3\u001b[0m \u001b[38;5;28mprint\u001b[39m(response)\n",
+      "Cell \u001b[0;32mIn[31], line 2\u001b[0m, in \u001b[0;36mget_llm_response\u001b[0;34m(prompt)\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m \u001b[38;5;21mget_llm_response\u001b[39m(prompt):\n\u001b[0;32m----> 2\u001b[0m     completion \u001b[38;5;241m=\u001b[39m client\u001b[38;5;241m.\u001b[39mchat\u001b[38;5;241m.\u001b[39mcompletions\u001b[38;5;241m.\u001b[39mcreate(\n\u001b[1;32m      3\u001b[0m         model\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mgpt-4o-mini\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[1;32m      4\u001b[0m         messages\u001b[38;5;241m=\u001b[39m[\n\u001b[1;32m      5\u001b[0m             {\n\u001b[1;32m      6\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrole\u001b[39m\u001b[38;5;124m\"\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124msystem\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[1;32m      7\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mcontent\u001b[39m\u001b[38;5;124m\"\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mYou are an AI assistant.\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[1;32m      8\u001b[0m             },\n\u001b[1;32m      9\u001b[0m             {\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrole\u001b[39m\u001b[38;5;124m\"\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124muser\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mcontent\u001b[39m\u001b[38;5;124m\"\u001b[39m: prompt},\n\u001b[1;32m     10\u001b[0m         ],\n\u001b[1;32m     11\u001b[0m         temperature\u001b[38;5;241m=\u001b[39m\u001b[38;5;241m0.0\u001b[39m,\n\u001b[1;32m     12\u001b[0m     )\n\u001b[1;32m     13\u001b[0m     response \u001b[38;5;241m=\u001b[39m completion\u001b[38;5;241m.\u001b[39mchoices[\u001b[38;5;241m0\u001b[39m]\u001b[38;5;241m.\u001b[39mmessage\u001b[38;5;241m.\u001b[39mcontent\n\u001b[1;32m     14\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m response\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_utils/_utils.py:279\u001b[0m, in \u001b[0;36mrequired_args.<locals>.inner.<locals>.wrapper\u001b[0;34m(*args, **kwargs)\u001b[0m\n\u001b[1;32m    277\u001b[0m             msg \u001b[38;5;241m=\u001b[39m \u001b[38;5;124mf\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mMissing required argument: \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mquote(missing[\u001b[38;5;241m0\u001b[39m])\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;124m\"\u001b[39m\n\u001b[1;32m    278\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mTypeError\u001b[39;00m(msg)\n\u001b[0;32m--> 279\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m func(\u001b[38;5;241m*\u001b[39margs, \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39mkwargs)\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py:929\u001b[0m, in \u001b[0;36mCompletions.create\u001b[0;34m(self, messages, model, audio, frequency_penalty, function_call, functions, logit_bias, logprobs, max_completion_tokens, max_tokens, metadata, modalities, n, parallel_tool_calls, prediction, presence_penalty, reasoning_effort, response_format, seed, service_tier, stop, store, stream, stream_options, temperature, tool_choice, tools, top_logprobs, top_p, user, web_search_options, extra_headers, extra_query, extra_body, timeout)\u001b[0m\n\u001b[1;32m    886\u001b[0m \u001b[38;5;129m@required_args\u001b[39m([\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmessages\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmodel\u001b[39m\u001b[38;5;124m\"\u001b[39m], [\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmessages\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmodel\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstream\u001b[39m\u001b[38;5;124m\"\u001b[39m])\n\u001b[1;32m    887\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m \u001b[38;5;21mcreate\u001b[39m(\n\u001b[1;32m    888\u001b[0m     \u001b[38;5;28mself\u001b[39m,\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m    926\u001b[0m     timeout: \u001b[38;5;28mfloat\u001b[39m \u001b[38;5;241m|\u001b[39m httpx\u001b[38;5;241m.\u001b[39mTimeout \u001b[38;5;241m|\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;241m|\u001b[39m NotGiven \u001b[38;5;241m=\u001b[39m NOT_GIVEN,\n\u001b[1;32m    927\u001b[0m ) \u001b[38;5;241m-\u001b[39m\u001b[38;5;241m>\u001b[39m ChatCompletion \u001b[38;5;241m|\u001b[39m Stream[ChatCompletionChunk]:\n\u001b[1;32m    928\u001b[0m     validate_response_format(response_format)\n\u001b[0;32m--> 929\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_post(\n\u001b[1;32m    930\u001b[0m         \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m/chat/completions\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[1;32m    931\u001b[0m         body\u001b[38;5;241m=\u001b[39mmaybe_transform(\n\u001b[1;32m    932\u001b[0m             {\n\u001b[1;32m    933\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmessages\u001b[39m\u001b[38;5;124m\"\u001b[39m: messages,\n\u001b[1;32m    934\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmodel\u001b[39m\u001b[38;5;124m\"\u001b[39m: model,\n\u001b[1;32m    935\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124maudio\u001b[39m\u001b[38;5;124m\"\u001b[39m: audio,\n\u001b[1;32m    936\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mfrequency_penalty\u001b[39m\u001b[38;5;124m\"\u001b[39m: frequency_penalty,\n\u001b[1;32m    937\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mfunction_call\u001b[39m\u001b[38;5;124m\"\u001b[39m: function_call,\n\u001b[1;32m    938\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mfunctions\u001b[39m\u001b[38;5;124m\"\u001b[39m: functions,\n\u001b[1;32m    939\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mlogit_bias\u001b[39m\u001b[38;5;124m\"\u001b[39m: logit_bias,\n\u001b[1;32m    940\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mlogprobs\u001b[39m\u001b[38;5;124m\"\u001b[39m: logprobs,\n\u001b[1;32m    941\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmax_completion_tokens\u001b[39m\u001b[38;5;124m\"\u001b[39m: max_completion_tokens,\n\u001b[1;32m    942\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmax_tokens\u001b[39m\u001b[38;5;124m\"\u001b[39m: max_tokens,\n\u001b[1;32m    943\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmetadata\u001b[39m\u001b[38;5;124m\"\u001b[39m: metadata,\n\u001b[1;32m    944\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmodalities\u001b[39m\u001b[38;5;124m\"\u001b[39m: modalities,\n\u001b[1;32m    945\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mn\u001b[39m\u001b[38;5;124m\"\u001b[39m: n,\n\u001b[1;32m    946\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mparallel_tool_calls\u001b[39m\u001b[38;5;124m\"\u001b[39m: parallel_tool_calls,\n\u001b[1;32m    947\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mprediction\u001b[39m\u001b[38;5;124m\"\u001b[39m: prediction,\n\u001b[1;32m    948\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mpresence_penalty\u001b[39m\u001b[38;5;124m\"\u001b[39m: presence_penalty,\n\u001b[1;32m    949\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mreasoning_effort\u001b[39m\u001b[38;5;124m\"\u001b[39m: reasoning_effort,\n\u001b[1;32m    950\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mresponse_format\u001b[39m\u001b[38;5;124m\"\u001b[39m: response_format,\n\u001b[1;32m    951\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mseed\u001b[39m\u001b[38;5;124m\"\u001b[39m: seed,\n\u001b[1;32m    952\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mservice_tier\u001b[39m\u001b[38;5;124m\"\u001b[39m: service_tier,\n\u001b[1;32m    953\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstop\u001b[39m\u001b[38;5;124m\"\u001b[39m: stop,\n\u001b[1;32m    954\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstore\u001b[39m\u001b[38;5;124m\"\u001b[39m: store,\n\u001b[1;32m    955\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstream\u001b[39m\u001b[38;5;124m\"\u001b[39m: stream,\n\u001b[1;32m    956\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstream_options\u001b[39m\u001b[38;5;124m\"\u001b[39m: stream_options,\n\u001b[1;32m    957\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mtemperature\u001b[39m\u001b[38;5;124m\"\u001b[39m: temperature,\n\u001b[1;32m    958\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mtool_choice\u001b[39m\u001b[38;5;124m\"\u001b[39m: tool_choice,\n\u001b[1;32m    959\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mtools\u001b[39m\u001b[38;5;124m\"\u001b[39m: tools,\n\u001b[1;32m    960\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mtop_logprobs\u001b[39m\u001b[38;5;124m\"\u001b[39m: top_logprobs,\n\u001b[1;32m    961\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mtop_p\u001b[39m\u001b[38;5;124m\"\u001b[39m: top_p,\n\u001b[1;32m    962\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124muser\u001b[39m\u001b[38;5;124m\"\u001b[39m: user,\n\u001b[1;32m    963\u001b[0m                 \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mweb_search_options\u001b[39m\u001b[38;5;124m\"\u001b[39m: web_search_options,\n\u001b[1;32m    964\u001b[0m             },\n\u001b[1;32m    965\u001b[0m             completion_create_params\u001b[38;5;241m.\u001b[39mCompletionCreateParamsStreaming\n\u001b[1;32m    966\u001b[0m             \u001b[38;5;28;01mif\u001b[39;00m stream\n\u001b[1;32m    967\u001b[0m             \u001b[38;5;28;01melse\u001b[39;00m completion_create_params\u001b[38;5;241m.\u001b[39mCompletionCreateParamsNonStreaming,\n\u001b[1;32m    968\u001b[0m         ),\n\u001b[1;32m    969\u001b[0m         options\u001b[38;5;241m=\u001b[39mmake_request_options(\n\u001b[1;32m    970\u001b[0m             extra_headers\u001b[38;5;241m=\u001b[39mextra_headers, extra_query\u001b[38;5;241m=\u001b[39mextra_query, extra_body\u001b[38;5;241m=\u001b[39mextra_body, timeout\u001b[38;5;241m=\u001b[39mtimeout\n\u001b[1;32m    971\u001b[0m         ),\n\u001b[1;32m    972\u001b[0m         cast_to\u001b[38;5;241m=\u001b[39mChatCompletion,\n\u001b[1;32m    973\u001b[0m         stream\u001b[38;5;241m=\u001b[39mstream \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28;01mFalse\u001b[39;00m,\n\u001b[1;32m    974\u001b[0m         stream_cls\u001b[38;5;241m=\u001b[39mStream[ChatCompletionChunk],\n\u001b[1;32m    975\u001b[0m     )\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1276\u001b[0m, in \u001b[0;36mSyncAPIClient.post\u001b[0;34m(self, path, cast_to, body, options, files, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1262\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m \u001b[38;5;21mpost\u001b[39m(\n\u001b[1;32m   1263\u001b[0m     \u001b[38;5;28mself\u001b[39m,\n\u001b[1;32m   1264\u001b[0m     path: \u001b[38;5;28mstr\u001b[39m,\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m   1271\u001b[0m     stream_cls: \u001b[38;5;28mtype\u001b[39m[_StreamT] \u001b[38;5;241m|\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m \u001b[38;5;241m=\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m,\n\u001b[1;32m   1272\u001b[0m ) \u001b[38;5;241m-\u001b[39m\u001b[38;5;241m>\u001b[39m ResponseT \u001b[38;5;241m|\u001b[39m _StreamT:\n\u001b[1;32m   1273\u001b[0m     opts \u001b[38;5;241m=\u001b[39m FinalRequestOptions\u001b[38;5;241m.\u001b[39mconstruct(\n\u001b[1;32m   1274\u001b[0m         method\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mpost\u001b[39m\u001b[38;5;124m\"\u001b[39m, url\u001b[38;5;241m=\u001b[39mpath, json_data\u001b[38;5;241m=\u001b[39mbody, files\u001b[38;5;241m=\u001b[39mto_httpx_files(files), \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39moptions\n\u001b[1;32m   1275\u001b[0m     )\n\u001b[0;32m-> 1276\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m cast(ResponseT, \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mrequest(cast_to, opts, stream\u001b[38;5;241m=\u001b[39mstream, stream_cls\u001b[38;5;241m=\u001b[39mstream_cls))\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:949\u001b[0m, in \u001b[0;36mSyncAPIClient.request\u001b[0;34m(self, cast_to, options, remaining_retries, stream, stream_cls)\u001b[0m\n\u001b[1;32m    946\u001b[0m \u001b[38;5;28;01melse\u001b[39;00m:\n\u001b[1;32m    947\u001b[0m     retries_taken \u001b[38;5;241m=\u001b[39m \u001b[38;5;241m0\u001b[39m\n\u001b[0;32m--> 949\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_request(\n\u001b[1;32m    950\u001b[0m     cast_to\u001b[38;5;241m=\u001b[39mcast_to,\n\u001b[1;32m    951\u001b[0m     options\u001b[38;5;241m=\u001b[39moptions,\n\u001b[1;32m    952\u001b[0m     stream\u001b[38;5;241m=\u001b[39mstream,\n\u001b[1;32m    953\u001b[0m     stream_cls\u001b[38;5;241m=\u001b[39mstream_cls,\n\u001b[1;32m    954\u001b[0m     retries_taken\u001b[38;5;241m=\u001b[39mretries_taken,\n\u001b[1;32m    955\u001b[0m )\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1042\u001b[0m, in \u001b[0;36mSyncAPIClient._request\u001b[0;34m(self, cast_to, options, retries_taken, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1040\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m remaining_retries \u001b[38;5;241m>\u001b[39m \u001b[38;5;241m0\u001b[39m \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_should_retry(err\u001b[38;5;241m.\u001b[39mresponse):\n\u001b[1;32m   1041\u001b[0m     err\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mclose()\n\u001b[0;32m-> 1042\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_retry_request(\n\u001b[1;32m   1043\u001b[0m         input_options,\n\u001b[1;32m   1044\u001b[0m         cast_to,\n\u001b[1;32m   1045\u001b[0m         retries_taken\u001b[38;5;241m=\u001b[39mretries_taken,\n\u001b[1;32m   1046\u001b[0m         response_headers\u001b[38;5;241m=\u001b[39merr\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mheaders,\n\u001b[1;32m   1047\u001b[0m         stream\u001b[38;5;241m=\u001b[39mstream,\n\u001b[1;32m   1048\u001b[0m         stream_cls\u001b[38;5;241m=\u001b[39mstream_cls,\n\u001b[1;32m   1049\u001b[0m     )\n\u001b[1;32m   1051\u001b[0m \u001b[38;5;66;03m# If the response is streamed then we need to explicitly read the response\u001b[39;00m\n\u001b[1;32m   1052\u001b[0m \u001b[38;5;66;03m# to completion before attempting to access the response text.\u001b[39;00m\n\u001b[1;32m   1053\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m err\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mis_closed:\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1091\u001b[0m, in \u001b[0;36mSyncAPIClient._retry_request\u001b[0;34m(self, options, cast_to, retries_taken, response_headers, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1087\u001b[0m \u001b[38;5;66;03m# In a synchronous context we are blocking the entire thread. Up to the library user to run the client in a\u001b[39;00m\n\u001b[1;32m   1088\u001b[0m \u001b[38;5;66;03m# different thread if necessary.\u001b[39;00m\n\u001b[1;32m   1089\u001b[0m time\u001b[38;5;241m.\u001b[39msleep(timeout)\n\u001b[0;32m-> 1091\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_request(\n\u001b[1;32m   1092\u001b[0m     options\u001b[38;5;241m=\u001b[39moptions,\n\u001b[1;32m   1093\u001b[0m     cast_to\u001b[38;5;241m=\u001b[39mcast_to,\n\u001b[1;32m   1094\u001b[0m     retries_taken\u001b[38;5;241m=\u001b[39mretries_taken \u001b[38;5;241m+\u001b[39m \u001b[38;5;241m1\u001b[39m,\n\u001b[1;32m   1095\u001b[0m     stream\u001b[38;5;241m=\u001b[39mstream,\n\u001b[1;32m   1096\u001b[0m     stream_cls\u001b[38;5;241m=\u001b[39mstream_cls,\n\u001b[1;32m   1097\u001b[0m )\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1042\u001b[0m, in \u001b[0;36mSyncAPIClient._request\u001b[0;34m(self, cast_to, options, retries_taken, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1040\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m remaining_retries \u001b[38;5;241m>\u001b[39m \u001b[38;5;241m0\u001b[39m \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_should_retry(err\u001b[38;5;241m.\u001b[39mresponse):\n\u001b[1;32m   1041\u001b[0m     err\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mclose()\n\u001b[0;32m-> 1042\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_retry_request(\n\u001b[1;32m   1043\u001b[0m         input_options,\n\u001b[1;32m   1044\u001b[0m         cast_to,\n\u001b[1;32m   1045\u001b[0m         retries_taken\u001b[38;5;241m=\u001b[39mretries_taken,\n\u001b[1;32m   1046\u001b[0m         response_headers\u001b[38;5;241m=\u001b[39merr\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mheaders,\n\u001b[1;32m   1047\u001b[0m         stream\u001b[38;5;241m=\u001b[39mstream,\n\u001b[1;32m   1048\u001b[0m         stream_cls\u001b[38;5;241m=\u001b[39mstream_cls,\n\u001b[1;32m   1049\u001b[0m     )\n\u001b[1;32m   1051\u001b[0m \u001b[38;5;66;03m# If the response is streamed then we need to explicitly read the response\u001b[39;00m\n\u001b[1;32m   1052\u001b[0m \u001b[38;5;66;03m# to completion before attempting to access the response text.\u001b[39;00m\n\u001b[1;32m   1053\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m err\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mis_closed:\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1091\u001b[0m, in \u001b[0;36mSyncAPIClient._retry_request\u001b[0;34m(self, options, cast_to, retries_taken, response_headers, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1087\u001b[0m \u001b[38;5;66;03m# In a synchronous context we are blocking the entire thread. Up to the library user to run the client in a\u001b[39;00m\n\u001b[1;32m   1088\u001b[0m \u001b[38;5;66;03m# different thread if necessary.\u001b[39;00m\n\u001b[1;32m   1089\u001b[0m time\u001b[38;5;241m.\u001b[39msleep(timeout)\n\u001b[0;32m-> 1091\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_request(\n\u001b[1;32m   1092\u001b[0m     options\u001b[38;5;241m=\u001b[39moptions,\n\u001b[1;32m   1093\u001b[0m     cast_to\u001b[38;5;241m=\u001b[39mcast_to,\n\u001b[1;32m   1094\u001b[0m     retries_taken\u001b[38;5;241m=\u001b[39mretries_taken \u001b[38;5;241m+\u001b[39m \u001b[38;5;241m1\u001b[39m,\n\u001b[1;32m   1095\u001b[0m     stream\u001b[38;5;241m=\u001b[39mstream,\n\u001b[1;32m   1096\u001b[0m     stream_cls\u001b[38;5;241m=\u001b[39mstream_cls,\n\u001b[1;32m   1097\u001b[0m )\n",
+      "File \u001b[0;32m/Applications/anaconda3/lib/python3.11/site-packages/openai/_base_client.py:1057\u001b[0m, in \u001b[0;36mSyncAPIClient._request\u001b[0;34m(self, cast_to, options, retries_taken, stream, stream_cls)\u001b[0m\n\u001b[1;32m   1054\u001b[0m         err\u001b[38;5;241m.\u001b[39mresponse\u001b[38;5;241m.\u001b[39mread()\n\u001b[1;32m   1056\u001b[0m     log\u001b[38;5;241m.\u001b[39mdebug(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mRe-raising status error\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\u001b[0;32m-> 1057\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_make_status_error_from_response(err\u001b[38;5;241m.\u001b[39mresponse) \u001b[38;5;28;01mfrom\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m\n\u001b[1;32m   1059\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_process_response(\n\u001b[1;32m   1060\u001b[0m     cast_to\u001b[38;5;241m=\u001b[39mcast_to,\n\u001b[1;32m   1061\u001b[0m     options\u001b[38;5;241m=\u001b[39moptions,\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m   1065\u001b[0m     retries_taken\u001b[38;5;241m=\u001b[39mretries_taken,\n\u001b[1;32m   1066\u001b[0m )\n",
+      "\u001b[0;31mRateLimitError\u001b[0m: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+     ]
+    }
+   ],
+   "source": [
+    "prompt = \"What is the capital of France?\"\n",
+    "response = get_llm_response(prompt)\n",
+    "print(response)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
